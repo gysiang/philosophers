@@ -3,62 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:59:57 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/04 16:13:42 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:42:31 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philo.h"
+#include "includes/philo.h"
 
-void	*routine(void* arg)
+void	run_philo(char **av)
 {
-	int index;
 
-	index = *(int *)arg;
-	printf("print the arg %d/n", index);
-	free(arg);
+}
+
+int	check_input(char **av)
+{
+	int	i;
+	int	num;
+
+	i = 1;
+	while (av[i] != NULL)
+	{
+		if (!is_number(av[i]) || ft_atoi(av[i]) < 1 || ft_atoi(av[i] > 200))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	main(int ac, char **av)
 {
 	if (ac == 6)
 	{
-		int			num_of_philo;
-		int			i;
-		int			*a;
-		pthread_t	th[num_of_philo];
-
-		i = 0;
-		num_of_philo = ft_atoi(av[1]);
-		while (num_of_philo > i)
+		if (!check_input(av))
 		{
-			a = malloc(sizeof(int));
-			if (!a)
-				return (1);
-			*a = i;
-			if (pthread_create(&th[i], NULL, &routine, a) != 0)
-			{
-				perror("Failed to create thread");
-			}
-			i++;
+			ft_putstr_fd("Wrong Inputs\n", 2);
+			exit(EXIT_FAILURE);
 		}
-		i = 0;
-		while (num_of_philo > i)
-		{
-			if (pthread_join(th[i], NULL) != 0)
-			{
-				perror("Failed to join thread");
-				return (1);
-			}
-			i++;
-		}
-	}
-	else
-	{
-		printf("Should have 5 arguments");
-		return (1);
+		run_philo(av);
 	}
 	return (0);
 }
