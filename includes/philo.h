@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:00:46 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/09 23:52:01 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:27:30 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,49 +26,43 @@
 # define SLEEPING "is sleeping"
 # define THINKING "is thinking"
 # define DIED "died"
-#endif
 
-typedef struct s_data
-{
-	int		num_of_philo;
-	int		num_of_meals;
-	size_t	die_time;
-	size_t	eat_time
-	size_t	sleep_time;
-	size_t	start_time;
-} t_data;
-
-typedef struct s_fork
-{
-	bool	is_used;
-	pthread_mutex_t	locked;
-} t_fork
+typedef pthread_mutex_t	t_mtx;
 
 typedef struct s_philo
 {
-	int				id;
-	int				meals_eaten;
-	int				is_dead;
-	pthread_mutex_t	last_meal_mutex;
-	size_t			last_meal_time;
-	t_fork			*right_fork;
-	t_fork			*left_fork;
-	t_data			params;
-} t_philo;
+	int			id;
+	int			meals_counter;
+	size_t		time_to_die;
+	size_t		time_to_eat;
+	size_t		time_to_sleep;
+	size_t		start_time;
+	size_t		last_meal;
+	int			num_of_philo;
+	int			target_meals;
+	bool		is_dead;
+	pthread_t	thread_id;
+	pthread_t	*first_fork;
+	pthread_t	*second_fork;
+	t_mtx		*write_lock;
+	t_mtx		*dead_lock;
+	t_mtx		*meal_lock;
+}	t_philo;
 
 typedef struct s_program
 {
-	int				is_dead;
-	pthread_mutex_t dead_lock;
-	pthread_mutex_t meal_lock;
-	pthread_mutex_t write_lock;
-	t_philo			*philos;
-}	t_program
+	bool		dead_flag;
+	t_mtx		write_lock;
+	t_mtx		dead_lock;
+	t_mtx		meal_lock;
+	t_philo		*philos;
+} t_program;
 
-int	ft_atoi(const char *str);
 int	is_number(const char *s);
+int	ft_atoi(const char *str);
 void	ft_putstr_fd(char *s, int fd);
+void	error_exit(const char *s);
+void	init_program(t_program *program, t_philo *philos);
+void	init_forks(pthread_mutex_t *forks, int num_of_philo);
 
 #endif
-
-// max no of philo <= 200

@@ -4,7 +4,7 @@ CFLAGS			= -Wall -Wextra -Werror
 
 # Directories
 
-INCLUDES		= includes
+INCLUDES		= ./includes
 SRC_DIR			= philo
 
 SRC_FILES		= $(addprefix $(SRC_DIR)/,

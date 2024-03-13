@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyong-si <gyong-si@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:13:57 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/07 09:37:25 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:45:53 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo.h"
+
+void	error_exit(const char *s)
+{
+	printf("s\n", s);
+	exit(EXIT_FAILURE);
+}
 
 int	ft_atoi(const char *str)
 {
