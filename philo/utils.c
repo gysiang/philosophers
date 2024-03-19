@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:13:57 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/13 15:45:53 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:23:09 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,40 @@ void	ft_putstr_fd(char *s, int fd)
 	if (!s)
 		return ;
 	write(fd, s, ft_strlen(s));
+}
+
+int	ft_strlen(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (*s)
+	{
+		i++;
+		s++;
+	}
+	return (i);
+}
+
+/**
+ * Destroy all mutexes
+*/
+void	destroy_all(char *s, t_program *program, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		write(2, s, ft_strlen(s));
+		write(1, "\n", 1);
+	}
+	pthread_mutex_destroy(&program->write_lock);
+	pthread_mutex_destroy(&program->meal_lock);
+	pthread_mutex_destroy(&program->dead_lock);
+	while (i < program->philos[0].num_of_philo)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
 }

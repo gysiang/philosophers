@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:59:57 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/13 18:53:25 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:08:06 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int	main(int ac, char **av)
 		init_philo(philos, &program, &forks, av);
 		init_forks(&forks, ft_atoi(av[1]));
 		/** Need to create the necessary threads and join them*/
+		create_threads(&program, forks);
 		/** clear all the memory leaks*/
+		destroy_all(NULL, &program, forks);
 	}
 	else
 		error_exit("Wrong Input: ./philo time_to_die time_to eat time_to_sleep [min meals]");

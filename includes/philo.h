@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:00:46 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/13 17:27:30 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:07:15 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <sys/select.h>
 # include <stdbool.h>
 
 # define MAX_PHILO 200
@@ -38,10 +39,11 @@ typedef struct s_philo
 	size_t		time_to_sleep;
 	size_t		start_time;
 	size_t		last_meal;
+	int			eating;
 	int			num_of_philo;
 	int			target_meals;
 	bool		is_dead;
-	pthread_t	thread_id;
+	pthread_t	thread;
 	pthread_t	*first_fork;
 	pthread_t	*second_fork;
 	t_mtx		*write_lock;
@@ -60,9 +62,21 @@ typedef struct s_program
 
 int	is_number(const char *s);
 int	ft_atoi(const char *str);
+int	ft_usleep(size_t	milliseconds);
+int	philosopher_dead(t_philo *philo, size_t	time_to_die);
+int	check_if_dead(t_philo *philos);
+int	check_if_all_ate(t_philo *philos);
+int	create_threads(t_program *program, pthread_mutex_t *forks);
+size_t	get_current_time(void);
 void	ft_putstr_fd(char *s, int fd);
 void	error_exit(const char *s);
 void	init_program(t_program *program, t_philo *philos);
 void	init_forks(pthread_mutex_t *forks, int num_of_philo);
+void	init_philo(t_philo *philos, t_program *program, t_mtx *forks, char *av);
+void	thinking(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	eating(t_philo *philo);
+void	*monitor(void *pointer);
+void	destroy_all(char *s, t_program *program, pthread_mutex_t *forks);
 
 #endif
