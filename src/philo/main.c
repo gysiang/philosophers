@@ -6,25 +6,36 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:59:57 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/19 17:08:06 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:24:26 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/philo.h"
+#include "../../includes/philo.h"
 
-void	check_input(char **av)
+int	check_input(char **av)
 {
 	if (ft_atoi(av[1]) > MAX_PHILO || ft_atoi(av[1]) <= 0
 			|| is_number(av[1]))
-			return(ft_putstr_fd("Invalid number of philosopher", 2));
+	{
+		error_exit("Invalid number of philosopher");
+	}
 	if (ft_atoi(av[2]) <= 60 || is_number(av[2]))
-			return(ft_putstr_fd("Invalid time to die", 2));
+	{
+		error_exit("Invalid time to die");
+	}
 	if (ft_atoi(av[3]) <= 60 || is_number(av[3]))
-			return(ft_putstr_fd("Invalid time to eat", 2));
+	{
+		error_exit("Invalid time to eat");
+	}
 	if (ft_atoi(av[4]) <= 60 || is_number(av[4]))
-			return(ft_putstr_fd("Invalid time to sleep", 2));
-	if (av[5] && (ft_atoi(av[4]) < 0 || is_number(av[4])))
-			return(ft_putstr_fd("Invalid time to sleep", 2));
+	{
+		error_exit("Invalid time to sleep");
+	}
+	if (av[5] && (ft_atoi(av[5]) < 0 || is_number(av[5])))
+	{
+		error_exit("Invalid no of meals");
+	}
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -35,14 +46,12 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		check_input(av);
-		/**This parts only initalise the values*/
+		if (!check_input(av))
+			printf("%s\n", "The input is okay");
 		init_program(&program, philos);
-		init_philo(philos, &program, &forks, av);
-		init_forks(&forks, ft_atoi(av[1]));
-		/** Need to create the necessary threads and join them*/
+		init_philo(philos, &program, forks, av);
+		init_forks(forks, ft_atoi(av[1]));
 		create_threads(&program, forks);
-		/** clear all the memory leaks*/
 		destroy_all(NULL, &program, forks);
 	}
 	else
@@ -50,10 +59,9 @@ int	main(int ac, char **av)
 	return (0);
 }
 /**
- * ./philo 5 800 200 200 [5]
-number_of_philo
+number_of_philosophers
 time_to_die
 time_to_eat
 time_to_sleep
-[num_of_times_to_eat]
+[number_of_times_each_philosopher_must_eat]
 **/

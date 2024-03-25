@@ -6,11 +6,11 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:50:00 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/19 16:58:14 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:38:23 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/philo.h"
+#include "../../includes/philo.h"
 
 int	philosopher_dead(t_philo *philo, size_t	time_to_die)
 {
@@ -33,7 +33,7 @@ int	check_if_dead(t_philo *philos)
 		{
 			print_message("died", &philos[i], philos[i].id);
 			pthread_mutex_lock(philos[i].dead_lock);
-			philos[i].is_dead == true;
+			philos[i].is_dead = 1;
 			pthread_mutex_unlock(philos[i].dead_lock);
 			return (1);
 		}
@@ -51,7 +51,7 @@ int	check_if_all_ate(t_philo *philos)
 	have_eaten = 0;
 	if (philos[0].target_meals == -1)
 		return (0);
-	while (i < philos[i].num_of_philo)
+	while (i < philos[0].num_of_philo)
 	{
 		pthread_mutex_lock(philos[i].meal_lock);
 		if (philos[i].meals_counter >= philos[i].target_meals)
@@ -62,7 +62,7 @@ int	check_if_all_ate(t_philo *philos)
 	if (have_eaten == philos[0].num_of_philo)
 	{
 		pthread_mutex_lock(philos[i].dead_lock);
-		philos[i].is_dead == true;
+		philos[i].is_dead = 1;
 		pthread_mutex_unlock(philos[i].dead_lock);
 		return (1);
 	}

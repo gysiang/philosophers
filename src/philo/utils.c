@@ -6,16 +6,16 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:13:57 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/19 15:23:09 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:26:06 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/philo.h"
+#include "../../includes/philo.h"
 
-void	error_exit(const char *s)
+int	error_exit(const char *s)
 {
-	printf("s\n", s);
-	exit(EXIT_FAILURE);
+	printf("%s\n", s);
+	return (1);
 }
 
 int	ft_atoi(const char *str)
@@ -55,17 +55,10 @@ int	is_number(const char *s)
 	while (*s != '\0')
 	{
 		if (*s < '0' || *s > '9')
-			return (0);
+			return (1);
 		s++;
 	}
-	return (1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
+	return (0);
 }
 
 int	ft_strlen(char *s)
@@ -79,6 +72,13 @@ int	ft_strlen(char *s)
 		s++;
 	}
 	return (i);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
 }
 
 /**

@@ -6,11 +6,12 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:49:54 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/19 16:57:12 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:25:00 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/philo.h"
+#include "../../includes/philo.h"
+
 
 size_t	get_current_time(void)
 {
@@ -26,7 +27,7 @@ size_t	get_current_time(void)
  * the given time. Needs review
 */
 
-int	ft_usleep(size_t	milliseconds)
+int	ft_usleep(size_t milliseconds)
 {
 	size_t	start;
 

@@ -6,21 +6,16 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:42:40 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/19 17:04:43 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:24:56 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/philo.h"
-
-/**
- * Check if the philo is dead if philo is dead return 1
- * else return 0
-*/
+#include "../../includes/philo.h"
 
 int	check_death(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
-	if (philo->is_dead == true)
+	if (philo->is_dead == 1)
 	{
 		pthread_mutex_unlock(philo->dead_lock);
 		return (1);
@@ -66,7 +61,7 @@ void	*philo_routine(void	*pointer)
  * Create all the philo threads
  * Need to have an observer thread
 */
-int	create_threads(t_program *program, pthread_mutex_t *forks)
+int	create_threads(t_program *program, t_mtx *forks)
 {
 	pthread_t	observer;
 	int			i;

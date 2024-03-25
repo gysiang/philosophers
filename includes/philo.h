@@ -6,7 +6,7 @@
 /*   By: gyong-si <gyongsi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:00:46 by gyong-si          #+#    #+#             */
-/*   Updated: 2024/03/19 17:07:15 by gyong-si         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:50:03 by gyong-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct s_philo
 	int			eating;
 	int			num_of_philo;
 	int			target_meals;
-	bool		is_dead;
+	int			is_dead;
 	pthread_t	thread;
-	pthread_t	*first_fork;
-	pthread_t	*second_fork;
+	t_mtx		*first_fork;
+	t_mtx		*second_fork;
 	t_mtx		*write_lock;
 	t_mtx		*dead_lock;
 	t_mtx		*meal_lock;
@@ -53,7 +53,7 @@ typedef struct s_philo
 
 typedef struct s_program
 {
-	bool		dead_flag;
+	int			dead_flag;
 	t_mtx		write_lock;
 	t_mtx		dead_lock;
 	t_mtx		meal_lock;
@@ -66,17 +66,18 @@ int	ft_usleep(size_t	milliseconds);
 int	philosopher_dead(t_philo *philo, size_t	time_to_die);
 int	check_if_dead(t_philo *philos);
 int	check_if_all_ate(t_philo *philos);
-int	create_threads(t_program *program, pthread_mutex_t *forks);
+int	create_threads(t_program *program, t_mtx *forks);
+int	error_exit(const char *s);
 size_t	get_current_time(void);
 void	ft_putstr_fd(char *s, int fd);
-void	error_exit(const char *s);
 void	init_program(t_program *program, t_philo *philos);
 void	init_forks(pthread_mutex_t *forks, int num_of_philo);
-void	init_philo(t_philo *philos, t_program *program, t_mtx *forks, char *av);
+void	init_philo(t_philo *philos, t_program *program, t_mtx *forks, char **av);
 void	thinking(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	eating(t_philo *philo);
 void	*monitor(void *pointer);
+void	print_message(char *message, t_philo *philo, int id);
 void	destroy_all(char *s, t_program *program, pthread_mutex_t *forks);
 
 #endif
